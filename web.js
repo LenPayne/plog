@@ -20,7 +20,6 @@ mongo.Db.connect(mongoUri, function (err, db) {
       }
     });
     db.close();
-    res.send(output);
   });
 });
 
