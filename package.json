@@ -9,6 +9,7 @@
   "author": "Len Payne",
   "license": "ISC",
   "dependencies": {
-    "express": "~4.3.1"
+    "express": "~4.3.1",
+    "mongodb": "~1.4.5"
   }
 }
