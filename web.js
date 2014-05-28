@@ -13,7 +13,12 @@ var DB_NAME = 'plog';
 
 mongo.Db.connect(mongoUri, function (err, db) {
   db.collection(DB_NAME, function(er, collection) {
-    collection.insert({'a':1}, {'b':2});
+    collection.insert({'a':1}, {'b':2}, function(err, objects) {
+      if (err) console.warn(err.message);
+      if (err && err.message.indexOf('E11000 ') !== -1) {
+        console.warn('ID already present in DB');
+      }
+    });
     db.close();
     res.send(output);
   });
