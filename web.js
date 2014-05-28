@@ -1,5 +1,6 @@
 var express = require('express'),
   path = require('path');
+  fs = require('fs');
 
 var app = express();
 
@@ -9,7 +10,13 @@ app.get('/', function(req, res) {
 
 app.get(/^\/([\w\-\.\/]*\.(?:html|css|js|gif|png|jpeg|jpg|ico))$/, function(req, res) {
   var filename = path.join('public', req.params[0]);
-  res.sendfile(filename);
+  fs.exists(filename, function(exists) {
+    if (exists)
+      res.sendfile(filename);
+    else
+      res.status(404).sendfile(path.join('public', '404.html'));
+  })
+
 })
 
 var port = Number(process.env.PORT || 5000);
