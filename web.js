@@ -17,7 +17,7 @@ mongo.Db.connect(mongoUri, function (err, db) {
       if (err) console.warn(err.message);
       if (err && err.message.indexOf('E11000 ') !== -1) {
         console.warn('ID already present in DB');
-      }      
+      }
       db.close();
     });
   });
@@ -40,9 +40,10 @@ app.get(/^\/([\w\-\.\/]*\.(?:html|css|js|gif|png|jpeg|jpg|ico))$/, function(req,
 app.get('/log', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(DB_NAME, function(er, collection) {
-      var output = collection.find().toArray();
-      db.close();
-      res.send(output);
+      collection.find().toArray(function (e, docs) {
+        db.close();
+        res.send(docs);
+      });
     });
   });
 });
