@@ -1,0 +1,14 @@
+{
+  "name": "plog",
+  "version": "0.0.0",
+  "description": "Payne's Log",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Len Payne",
+  "license": "ISC",
+  "dependencies": {
+    "express": "~4.3.1"
+  }
+}
