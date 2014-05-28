@@ -13,7 +13,7 @@ var DB_NAME = 'plog';
 
 mongo.Db.connect(mongoUri, function (err, db) {
   db.collection(DB_NAME, function(er, collection) {
-    collection.insert({'a':1}, {'b':2}, function(err, objects) {
+    collection.insert({'appStarted': new Date()}, {'safe':true}, function(err, objects) {
       if (err) console.warn(err.message);
       if (err && err.message.indexOf('E11000 ') !== -1) {
         console.warn('ID already present in DB');
@@ -37,7 +37,17 @@ app.get(/^\/([\w\-\.\/]*\.(?:html|css|js|gif|png|jpeg|jpg|ico))$/, function(req,
   })
 });
 
-app.get('/log', function(req, res) {
+app.get('/starts', function(req, res) {
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection(DB_NAME, function(er, collection) {
+      collection.find({ 'appStarted': { '$exists' : true}}, {'appStarted': true}).toArray(function (e, docs) {
+        db.close();
+        res.send(docs);
+      });
+    });
+  });
+})
+app.get('/plog', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(DB_NAME, function(er, collection) {
       collection.find().toArray(function (e, docs) {
@@ -47,6 +57,10 @@ app.get('/log', function(req, res) {
     });
   });
 });
+
+app.post('/plog', function(req, res) {
+
+})
 
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
