@@ -1,8 +1,23 @@
-var express = require('express'),
-  path = require('path');
-  fs = require('fs');
+var express = require('express');
+var path = require('path');
+var fs = require('fs');
+var mongo = require('mongodb');
 
 var app = express();
+
+var mongoUri = process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/mydb';
+
+var DB_NAME = 'plog';
+
+mongo.Db.connect(mongoUri, function (err, db) {
+  db.collection(DB_NAME, function(er, collection) {
+    collection.insert({'a':1}, {'b':2});
+    db.close();
+    res.send(output);
+  });
+});
 
 app.get('/', function(req, res) {
   res.sendfile(path.join('public', 'index.html'));
@@ -16,7 +31,17 @@ app.get(/^\/([\w\-\.\/]*\.(?:html|css|js|gif|png|jpeg|jpg|ico))$/, function(req,
     else
       res.status(404).sendfile(path.join('public', '404.html'));
   })
-})
+});
+
+app.get('/log', function(req, res) {
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection(DB_NAME, function(er, collection) {
+      var output = collection.find().toArray();
+      db.close();
+      res.send(output);
+    });
+  });
+});
 
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
