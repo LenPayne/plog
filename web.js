@@ -5,7 +5,7 @@ var express = require('express'),
 var app = express();
 
 app.get('/', function(req, res) {
-  next('/index.html')
+  res.redirect('/index.html');
 });
 
 app.get(/^\/([\w\-\.\/]*\.(?:html|css|js|gif|png|jpeg|jpg|ico))$/, function(req, res) {
@@ -16,7 +16,6 @@ app.get(/^\/([\w\-\.\/]*\.(?:html|css|js|gif|png|jpeg|jpg|ico))$/, function(req,
     else
       res.status(404).sendfile(path.join('public', '404.html'));
   })
-
 })
 
 var port = Number(process.env.PORT || 5000);
