@@ -7,7 +7,7 @@ app.get('/', function(req, res) {
   next('/index.html')
 });
 
-app.get(/^\/([\w\/]*\.(?:html|css|js|gif|png|jpeg|ico))$/, function(req, res) {
+app.get(/^\/([\w\/]*\.(?:html|css|js|gif|png|jpeg|jpg|ico))$/, function(req, res) {
   var filename = path.join('public', req.params[0]);
   res.sendfile(filename);
 })
