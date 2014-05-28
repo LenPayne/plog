@@ -5,7 +5,7 @@ var express = require('express'),
 var app = express();
 
 app.get('/', function(req, res) {
-  res.redirect('/index.html');
+  res.sendfile(path.join('public', 'index.html'));
 });
 
 app.get(/^\/([\w\-\.\/]*\.(?:html|css|js|gif|png|jpeg|jpg|ico))$/, function(req, res) {
