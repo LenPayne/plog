@@ -17,9 +17,9 @@ mongo.Db.connect(mongoUri, function (err, db) {
       if (err) console.warn(err.message);
       if (err && err.message.indexOf('E11000 ') !== -1) {
         console.warn('ID already present in DB');
-      }
+      }      
+      db.close();
     });
-    db.close();
   });
 });
 
