@@ -26,18 +26,16 @@
 		<script>
 			$(document).on('ready', function() {
 				$('#newpost').on('submit', function() {
-					$.ajax({
-						type: "POST",
-						url: "/plog",
-						data: {
+					$.post("/plog",
+						{
 							title: $('#title').text(),
 							content: $('#content').text()
 						},
-						success: function() {
+						function() {
 							$('#title').text('');
 							$('#content').text('');
 						}
-					});
+					);
 					return false;
 				});
 			});
