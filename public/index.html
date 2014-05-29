@@ -34,6 +34,7 @@
 						output+='<article>';
 						output+='<h3>' + data[i].title + '</h3>';
 						output+='<p>' + data[i].content + '</p>';
+						output+='<p><a href="/page/' + data[i].title +'">Read More</a></p>';
 						output+='</article>';
 					}
 					$('#posts').html(output);
