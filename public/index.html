@@ -22,6 +22,25 @@
 		  ga('send', 'pageview');
 
 		</script>
+		<script src="http://code.jquery.com/jquery.min.js"></script>
+		<script>
+			$(document).on('ready', function() {
+				$('#newpost').on('submit', function() {
+					$.ajax({
+						type: "POST",
+						url: "/plog",
+						data: {
+							title: $('#title').text(),
+							content: $('#content').text()
+						},
+						success: function() {
+							$('#title').text('');
+							$('#content').text('');
+						}
+					});
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<header>
@@ -70,11 +89,11 @@
 					<a href="mailto:info@lenpayne.ca">info@lenpayne.ca</a>
 				</address>
 			</article>
-			<form action="/plog" method="post">
+			<form id="newpost">
 				<label for="title">Title:</label><input id="title" name="title" type="text" />
 				<label for="content">Content:</label>
 				<textarea id="content" name="content"></textarea>
-				<input type="submit" />
+				<input id="submit" type="submit" />
 			</form>
 		</section>
 	</body>
