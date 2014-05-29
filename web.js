@@ -70,13 +70,15 @@ app.post('/plog', function(req, res) {
     'content': content,
     'time': time
   };
-  db.collection(DB_NAME, function(er, collection) {
-    collection.insert(obj, {'safe':true}, function(err, objects) {
-      if (err) console.warn(err.message);
-      if (err && err.message.indexOf('E11000 ') !== -1) {
-        console.warn('ID already present in DB');
-      }
-      db.close();
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection(DB_NAME, function(er, collection) {
+      collection.insert(obj, {'safe':true}, function(err, objects) {
+        if (err) console.warn(err.message);
+        if (err && err.message.indexOf('E11000 ') !== -1) {
+          console.warn('ID already present in DB');
+        }
+        db.close();
+      });
     });
   });
 });
