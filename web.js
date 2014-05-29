@@ -4,6 +4,7 @@ var fs = require('fs');
 var mongo = require('mongodb');
 
 var app = express();
+app.use(express.bodyParser());
 
 var mongoUri = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
@@ -46,7 +47,8 @@ app.get('/starts', function(req, res) {
       });
     });
   });
-})
+});
+
 app.get('/plog', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(DB_NAME, function(er, collection) {
@@ -59,8 +61,24 @@ app.get('/plog', function(req, res) {
 });
 
 app.post('/plog', function(req, res) {
-
-})
+  var title = req.body.title;
+  var content = req.body.content;
+  var time = new Date();
+  var obj = {
+    'title': title,
+    'content': content,
+    'time': time
+  };
+  db.collection(DB_NAME, function(er, collection) {
+    collection.insert(obj, {'safe':true}, function(err, objects) {
+      if (err) console.warn(err.message);
+      if (err && err.message.indexOf('E11000 ') !== -1) {
+        console.warn('ID already present in DB');
+      }
+      db.close();
+    });
+  });
+});
 
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
