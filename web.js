@@ -73,11 +73,16 @@ app.post('/plog', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(DB_NAME, function(er, collection) {
       collection.insert(obj, {'safe':true}, function(err, objects) {
-        if (err) console.warn(err.message);
+        if (err) {
+          console.warn(err.message);
+          res.status(500).send({ok: false});
+        }
         if (err && err.message.indexOf('E11000 ') !== -1) {
           console.warn('ID already present in DB');
+          res.status(500).send({ok: false});
         }
         db.close();
+        res.send({ok: true});
       });
     });
   });
