@@ -53,7 +53,7 @@ app.get('/starts', function(req, res) {
 app.get('/plog', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(DB_NAME, function(er, collection) {
-      collection.find().toArray(function (e, docs) {
+      collection.find({ 'title': { '$exists' : true}, 'content': { '$exists': true}}).toArray(function (e, docs) {
         db.close();
         res.send(docs);
       });
