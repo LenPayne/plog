@@ -2,9 +2,10 @@ var express = require('express');
 var path = require('path');
 var fs = require('fs');
 var mongo = require('mongodb');
+var bodyParser = require('body-parser');
 
 var app = express();
-app.use(express.bodyParser());
+app.use(bodyParser());
 
 var mongoUri = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
