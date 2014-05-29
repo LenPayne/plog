@@ -47,3 +47,7 @@ h3 {
 .work .row {
 	padding: 0.5em;
 }
+article {
+	margin-bottom: 1em;
+	border-bottom: 1px #048 double;
+}
