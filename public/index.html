@@ -28,12 +28,12 @@
 				$('#newpost').on('submit', function() {
 					$.post("/plog",
 						{
-							title: $('#title').text(),
-							content: $('#content').text()
+							title: $('#title').val(),
+							content: $('#content').val()
 						},
 						function() {
-							$('#title').text('');
-							$('#content').text('');
+							$('#title').val('');
+							$('#content').val('');
 						}
 					);
 					return false;
