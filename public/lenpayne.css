@@ -12,100 +12,6 @@
 @import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
-/* Reset Styles */
-
-body * {
-	margin: 0;
-	padding: 0;
-	border: 0;
-}
-
-/* Layout Styles */
-@media (max-width: 700px) {
-	section aside {
-		width: 80%;
-		margin: 2em auto;
-		padding: 3em 2em;
-		clear: both;
-	}
-	header figure {
-		display: none;
-	}
-}
-@media (min-width: 701px) {
-	section aside {
-		width: 30%;
-		float: right;
-		clear: right;
-		margin: 2em;
-		padding: 2em;
-	}
-	header h1 {
-		padding-top: 3em;
-		float: left;
-		clear: left;
-	}
-	section {
-		padding-top: 3em;
-	}
-}
-
-header {
-	width: 80%;
-	margin: 2em auto;
-	clear: both;
-}
-
-header h1 {
-	width: 30%;
-}
-
-header figure {
-	width: 60%;
-	float: left;
-	clear: right;
-	margin-left: 5%;
-	text-align: center;
-}
-
-section {
-	margin: 2em auto;
-	width: 80%;
-	clear: both;
-}
-
-section aside ul {
-	list-style-type: none;
-	margin: 0.5em auto 1em auto;
-}
-
-section aside ul li {
-	margin: 0.5em;
-}
-
-section aside img {
-	display: inline-block;
-	margin: 0.5em;
-}
-
-section aside .work img {
-	vertical-align: middle;
-}
-section aside .work ul {
-	list-style-type: none;
-}
-
-section p {
-	margin-bottom: 2em;
-}
-
-section article address {
-	width: 80%;
-	margin: 2em auto;
-}
-
-
-
 /* Aesthetic Styles */
 
 body {
@@ -125,65 +31,19 @@ a:hover {
 	text-decoration: underline;
 }
 
-header h1 {
+h1 {
 	font-family: 'Ubuntu Mono', monospace;
 	font-size: 3em;
+	font-weight: bold;
 	letter-spacing: 0.12em;
 }
 h3 {
 	font-family: 'Ubuntu Mono', monospace;
 	font-size: 1.2em;
-	margin-top: 1em;	
-}
-
-header figure img {
-	-moz-transition-duration: 0.5s;
-	-webkit-transition-duration: 0.5s;
-	-o-transition-duration: 0.5s;
-	-ms-transition-duration: 0.5s;
-	transition-duration: 0.5s;
-
-	-moz-box-shadow: rgba(0,0,0,0.7) 2px 2px 2px;
-	-webkit-box-shadow: rgba(0,0,0,0.7) 2px 2px 2px;
-	-o-box-shadow: rgba(0,0,0,0.7) 2px 2px 2px;
-	-ms-box-shadow: rgba(0,0,0,0.7) 2px 2px 2px;
-	box-shadow: rgba(0,0,0,0.7) 2px 2px 2px;
-}
-
-header figure img:hover {
-	-moz-transform: rotate(3deg);
-	-webkit-transform: rotate(3deg);
-	-o-transform: rotate(3deg);
-	-ms-transform: rotate(3deg);
-	transform: rotate(3deg);
-}
-
-section aside {
-	-moz-border-radius: 0.5em;
-	-ms-border-radius: 0.5em;
-	-o-border-radius: 0.5em;
-	-webkit-border-radius: 0.5em;
-	border-radius: 0.5em;
-
-	background-color: rgba(0,64,128,0.7);
-}
-
-ul.social {
-	list-style-type: none;
-	width: 80%;
-	overflow: auto;
-}
-ul.social li {
-	float: left;
-	margin: 0;
-	padding: 0;
-}
-ul.social img {
-	margin: 0;
-	padding: 0;
-}
-
-section article address {
-	font-style: normal;
 	font-weight: bold;
+	margin-top: 1em;
+}
+
+.work .row {
+	padding: 0.5em;
 }

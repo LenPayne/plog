@@ -10,7 +10,6 @@
 <html>
 	<head>
 		<script type="text/javascript" src="modernizr.custom.10997.js"></script>
-		<link rel="stylesheet" type="text/css" href="lenpayne.css" />
 		<title>Len Payne - Web Developer and Educator with International Experience</title>
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -23,13 +22,19 @@
 
 		</script>
 		<script src="http://code.jquery.com/jquery.min.js"></script>
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="lenpayne.css" />
 		<script>
 			function updatePosts() {
 				$.getJSON('/plog', function(data) {
 					var output = '';
 					for (var i = 0; i < data.length; i++) {
+						output+='<article>';
 						output+='<h3>' + data[i].title + '</h3>';
 						output+='<p>' + data[i].content + '</p>';
+						output+='</article>';
 					}
 					$('#posts').html(output);
 				})
@@ -55,59 +60,52 @@
 		</script>
 	</head>
 	<body>
-		<header>
-			<h1>Len Payne</h1>
-			<figure><img src="images/len_shaggy.jpg" /></figure>
-		</header>
-		<section>
-			<aside>
-				<h3>Download My <a href="LenPayneResume.pdf">Resume</a></h3>
-				<h3>Public Work:</h3>
-				<div class="work">
-					<ul>
-						<li><a href="http://www.flashparker.com"><img src="images/flashparker-logo32.png" />Flash Parker Freelance</a></li>
-						<li><a href="http://www.youtube.com/watch?v=Q0kjiIH6u-M&list=PLBmeNj1-Qt2ZucuAzoZQjOxscrWwYTii_&feature=share"><img src="images/android-logo32.png" />AndEngine Tutorials</a></li>
-					</ul>
-				</div>
-				<h3>Social:</h3>
-				<ul class="social">
-					<li><a href="mailto:info@lenpayne.ca"><img src="images/email.png" /></a></li>
-					<li><a href="http://www.flickr.com/photos/lenpayne"><img src="images/flickr.png" /></a></li>
-					<li><a href="https://github.com/lenpayne"><img src="images/github_alt.png" /></a></li>
-					<li><a href="http://www.linkedin.com/pub/len-payne/25/856/884"><img src="images/linkedin.png" /></a></li>
-					<li><a href="https://twitter.com/LenAtLambton"><img src="images/twitter.png" /></a></li>
-					<li><a href="http://www.youtube.com/user/Kerrz82"><img src="images/youtube.png" /></a></li>
-				</ul>
-				<a class="twitter-timeline" href="https://twitter.com/LenAtLambton" data-widget-id="468532220223700992">Tweets by @LenAtLambton</a>
-				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-			</aside>
-			<article>
-				<p>Welcome to this little slice of the web. My name is Len
-				Payne, and I am an Associate Professor of the School of Technology,
-				Energy and Apprenticeship at
-				<a href="http://www.lambtoncollege.ca">Lambton College of
-				Applied Arts and Technology</a>. Specifically, I teach in the
-			  <a href="http://www.lambtoncollege.ca/IPRC">Internet Programming and
-				Database Management (IPRC)</a> graduate certificate and the
-				<a href="http://www.lambtoncollege.ca/CPRO">Computer Programmer
-				(CPRO)</a> diploma programs.</p>
-				<p>My specialty is in web development, but I find my portfolio branching
-			  increasingly into applications development, specifically mobile app
-				development.</p>
-				<p>This site is expanding at a glacial rate. If you're interested
-				in my work feel free to come back again for more details.</p>
-				<p>You can contact me at the following:</p>
-				<address>
-					<a href="mailto:info@lenpayne.ca">info@lenpayne.ca</a>
-				</address>
-			</article>
-			<section id="posts"></section>
-			<form id="newpost">
-				<label for="title">Title:</label><input id="title" name="title" type="text" />
-				<label for="content">Content:</label>
-				<textarea id="content" name="content"></textarea>
-				<input id="submit" type="submit" />
-			</form>
-		</section>
+		<div class="container">
+			<div class="row">
+				<main class="col-md-8">
+					<header>
+						<h1>Len Payne</h1>
+					</header>
+					<div id="posts"></div>
+					<form id="newpost">
+						<div class="row">
+							<div class="col-md-10">
+								<div class="form-group"><label for="title">Title:</label><input class="form-control" id="title" name="title" type="text" /></div>
+								<div class="form-group"><label for="content">Content:</label><textarea rows="8" class="form-control" id="content" name="content"></textarea></div>
+								<div class="form-group col-md-4 col-md-offset-4"><input class="form-control" id="submit" type="submit" /></div>
+							</div>
+					</form>
+				</main>
+				<aside class="col-md-4">
+					<header>
+						<div class="container-fluid">
+							<figure class="row hidden-xs hidden-sm"><img class="img-responsive mugshot col-xs-12" src="images/len_shaggy.jpg" /></figure>
+							<div class="row">
+								<div class="col-xs-2"><a href="mailto:info@lenpayne.ca"><img src="images/email.png" /></a></div>
+								<div class="col-xs-2"><a href="http://www.flickr.com/photos/lenpayne"><img src="images/flickr.png" /></a></div>
+								<div class="col-xs-2"><a href="https://github.com/lenpayne"><img src="images/github_alt.png" /></a></div>
+								<div class="col-xs-2"><a href="http://www.linkedin.com/pub/len-payne/25/856/884"><img src="images/linkedin.png" /></a></div>
+								<div class="col-xs-2"><a href="https://twitter.com/LenAtLambton"><img src="images/twitter.png" /></a></div>
+								<div class="col-xs-2"><a href="http://www.youtube.com/user/Kerrz82"><img src="images/youtube.png" /></a></div>
+							</div>
+						</div>
+					</header>
+					<h3>Download My <a href="LenPayneResume.pdf">Resume</a></h3>
+					<h3>Public Work:</h3>
+					<div class="container-fluid work">
+						<div class="row">
+							<a class="col-xs-2" href="http://www.flashparker.com"><img src="images/flashparker-logo32.png" /></a>
+							<a class="col-xs-10 lbl" href="http://www.flashparker.com">Flash Parker Freelance</a>
+						</div>
+						<div class="row">
+							<a class="col-xs-2" href="http://www.youtube.com/watch?v=Q0kjiIH6u-M&list=PLBmeNj1-Qt2ZucuAzoZQjOxscrWwYTii_&feature=share"><img src="images/android-logo32.png" /></a>
+							<a class="col-xs-10 lbl" href="http://www.youtube.com/watch?v=Q0kjiIH6u-M&list=PLBmeNj1-Qt2ZucuAzoZQjOxscrWwYTii_&feature=share">AndEngine Tutorials</a>
+						</div>
+					</div>
+					<a class="twitter-timeline" href="https://twitter.com/LenAtLambton" data-widget-id="468532220223700992">Tweets by @LenAtLambton</a>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+				</aside>
+			</div>
+		</div>
 	</body>
 </html>
