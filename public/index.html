@@ -24,6 +24,17 @@
 		</script>
 		<script src="http://code.jquery.com/jquery.min.js"></script>
 		<script>
+			function updatePosts() {
+				$.getJSON('/plog', function(data) {
+					var output = '';
+					for (var i = 0; i < data.length; i++) {
+						output+='<h3>' + data[i].title + '</h3>';
+						output+='<p>' + data[i].content + '</p>';
+					}
+					$('#posts').html(output);
+				})
+			}
+
 			$(document).on('ready', function() {
 				$('#newpost').on('submit', function() {
 					$.post("/plog",
@@ -36,8 +47,10 @@
 							$('#content').val('');
 						}
 					);
+					updatePosts();
 					return false;
 				});
+				updatePosts();
 			});
 		</script>
 	</head>
@@ -88,6 +101,7 @@
 					<a href="mailto:info@lenpayne.ca">info@lenpayne.ca</a>
 				</address>
 			</article>
+			<section id="posts"></section>
 			<form id="newpost">
 				<label for="title">Title:</label><input id="title" name="title" type="text" />
 				<label for="content">Content:</label>
