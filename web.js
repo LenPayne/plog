@@ -18,6 +18,12 @@ var COLLECTION_SESSION = 'plog_sessions';
 var COLLECTION_USERS = 'plog_users';
 var SESSION_TIMEOUT = 600;
 
+var scryptParameters = scrypt.params(0.8);
+scrypt.hash.config.keyEncoding = "ascii";
+scrypt.hash.config.outputEncoding = "hex";
+scrypt.verify.config.keyEncoding = "ascii";
+scrypt.verify.config.hashEncoding = "hex";
+
 app.get('/', function(req, res) {
   res.sendfile(path.join('public', 'index.html'));
 });
@@ -97,7 +103,7 @@ app.post('/login', function(req, res) {
   var pass = req.body.pass;
   var obj = {
     'user': user,
-    'pass': scrypt.hash(pass, scrypt.params(8))
+    'pass': scrypt.hash(pass, scryptParameters)
   };
   db.collection(COLLECTION_USERS, function(er, collection) {
     collection.insert(obj, {'safe':true}, function(err, objects) {
