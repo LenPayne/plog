@@ -65,13 +65,12 @@ app.get('/login', function(req, res) {
   var pass = req.query.pass;
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_USERS, function(er, collection) {
-      var cursor = collection.find({ 'user': user});
-      cursor.nextObject(function (err, doc) {
+      var cursor = collection.find({ 'user': user}).toArray(function (err, docs) {
         //TODO: Issue with password not being accepted. I should probably just make a rough registration/approval process.
         console.log(user);
-        console.log(doc.user);
-        console.log(doc.pass);
-        var login = scrypt.verify(doc.pass, pass);
+        console.log(docs[0].user);
+        console.log(docs[0].pass);
+        var login = scrypt.verify(docs[0].pass, pass);
         console.log(login);
         if (login) {
           var time = new Date();
