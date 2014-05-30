@@ -67,6 +67,7 @@ app.get('/login', function(req, res) {
     db.collection(COLLECTION_USERS, function(er, collection) {
       var cursor = collection.find({ 'user': user});
       var doc = cursor.nextObject(function (err, doc) {
+        //TODO: Issue with password not being accepted. I should probably just make a rough registration/approval process.
         console.log(user);
         console.log(doc.user);
         console.log(doc.pass);
