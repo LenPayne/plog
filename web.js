@@ -66,7 +66,7 @@ app.get('/login', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_USERS, function(er, collection) {
       var cursor = collection.find({ 'user': user});
-      var doc = cursor.nextObject(function (err, doc) {
+      cursor.nextObject(function (err, doc) {
         //TODO: Issue with password not being accepted. I should probably just make a rough registration/approval process.
         console.log(user);
         console.log(doc.user);
@@ -110,18 +110,20 @@ app.post('/login', function(req, res) {
     'user': user,
     'pass': scrypt.hash(pass, scryptParameters)
   };
-  db.collection(COLLECTION_USERS, function(er, collection) {
-    collection.insert(obj, {'safe':true}, function(err, objects) {
-      if (err) {
-        console.warn(err.message);
-        res.status(500).send({ok: false});
-      }
-      if (err && err.message.indexOf('E11000 ') !== -1) {
-        console.warn('ID already present in DB');
-        res.status(500).send({ok: false});
-      }
-      db.close();
-      res.send({'ok': true});
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection(COLLECTION_USERS, function(er, collection) {
+      collection.insert(obj, {'safe':true}, function(err, objects) {
+        if (err) {
+          console.warn(err.message);
+          res.status(500).send({ok: false});
+        }
+        if (err && err.message.indexOf('E11000 ') !== -1) {
+          console.warn('ID already present in DB');
+          res.status(500).send({ok: false});
+        }
+        db.close();
+        res.send({'ok': true});
+      });
     });
   });
 });
