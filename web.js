@@ -4,7 +4,7 @@ var fs = require('fs');
 var mongo = require('mongodb');
 var bodyParser = require('body-parser');
 var scrypt = require('scrypt');
-var md5 = require('md5');
+var md5 = require('MD5');
 
 var app = express();
 app.use(bodyParser());
@@ -77,7 +77,8 @@ app.get('/login', function(req, res) {
           var time = new Date();
           var microtime = time.getTime();
           var expires = microtime + 1000 * SESSION_TIMEOUT;
-          var apikey = md5(expires + '#' + user);
+          var keyFeed = expires + '#' + user;
+          var apikey = md5(keyFeed);
           var obj = { 'apiKey': apikey, 'expires': expires};
           db.collection(COLLECTION_SESSION, function(er, collection) {
             collection.insert(obj, {'safe':true}, function(err, objects) {
