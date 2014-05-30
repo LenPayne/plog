@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "Payne's Log",
   "main": "web.js",
+  "engines": {
+    "node": "0.10.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +14,8 @@
   "dependencies": {
     "express": "~4.3.1",
     "mongodb": "~1.4.5",
-    "body-parser": "~1.2.2"
+    "body-parser": "~1.2.2",
+    "scrypt": "~3.0.1",
+    "md5": "~1.0.0"
   }
 }

@@ -3,6 +3,8 @@ var path = require('path');
 var fs = require('fs');
 var mongo = require('mongodb');
 var bodyParser = require('body-parser');
+var scrypt = require('scrypt');
+var md5 = require('md5');
 
 var app = express();
 app.use(bodyParser());
@@ -11,19 +13,10 @@ var mongoUri = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
   'mongodb://localhost/mydb';
 
-var DB_NAME = 'plog';
-
-mongo.Db.connect(mongoUri, function (err, db) {
-  db.collection(DB_NAME, function(er, collection) {
-    collection.insert({'appStarted': new Date()}, {'safe':true}, function(err, objects) {
-      if (err) console.warn(err.message);
-      if (err && err.message.indexOf('E11000 ') !== -1) {
-        console.warn('ID already present in DB');
-      }
-      db.close();
-    });
-  });
-});
+var COLLECTION_POSTS = 'plog_posts';
+var COLLECTION_SESSION = 'plog_sessions';
+var COLLECTION_USERS = 'plog_users';
+var SESSION_TIMEOUT = 600;
 
 app.get('/', function(req, res) {
   res.sendfile(path.join('public', 'index.html'));
@@ -41,7 +34,7 @@ app.get(/^\/([\w\-\.\/]*\.(?:html|css|js|gif|png|jpeg|jpg|ico))$/, function(req,
 
 app.get('/starts', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
-    db.collection(DB_NAME, function(er, collection) {
+    db.collection(COLLECTION_POSTS, function(er, collection) {
       collection.find({ 'appStarted': { '$exists' : true}}, {'appStarted': true}).toArray(function (e, docs) {
         db.close();
         res.send(docs);
@@ -52,7 +45,7 @@ app.get('/starts', function(req, res) {
 
 app.get('/plog', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
-    db.collection(DB_NAME, function(er, collection) {
+    db.collection(COLLECTION_POSTS, function(er, collection) {
       collection.find({ 'title': { '$exists' : true}, 'content': { '$exists': true}}).toArray(function (e, docs) {
         db.close();
         res.send(docs);
@@ -61,7 +54,69 @@ app.get('/plog', function(req, res) {
   });
 });
 
+app.get('/login', function(req, res) {
+  var user = req.body.user;
+  var pass = req.body.pass;
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection(COLLECTION_USERS, function(er, collection) {
+      var cursor = collection.find({ 'user': user});
+      var doc = cursor.nextObject(function (err, doc) {
+        var login = scrypt.verify(doc.pass, pass);
+        if (login) {
+          var time = new Date();
+          var microtime = time.getTime();
+          var expires = microtime + 1000 * SESSION_TIMEOUT;
+          var apikey = md5(expires + '#' + user);
+          var obj = { 'apiKey': apikey, 'expires': expires};
+          db.collection(COLLECTION_SESSION, function(er, collection) {
+            collection.insert(obj, {'safe':true}, function(err, objects) {
+              if (err) {
+                console.warn(err.message);
+                res.status(500).send({ok: false});
+              }
+              if (err && err.message.indexOf('E11000 ') !== -1) {
+                console.warn('ID already present in DB');
+                res.status(500).send({ok: false});
+              }
+              db.close();
+              res.send({'apiKey': apikey});
+            });
+          });
+        }
+        else {
+          console.warn('Invalid Login: ' + user);
+          res.status(403).send({ok: false});
+        }
+      });
+    });
+  });
+});
+
+app.post('/login', function(req, res) {
+  var user = req.body.user;
+  var pass = req.body.pass;
+  var obj = {
+    'user': user,
+    'pass': scrypt.hash(pass, scrypt.params(8))
+  };
+  db.collection(COLLECTION_USERS, function(er, collection) {
+    collection.insert(obj, {'safe':true}, function(err, objects) {
+      if (err) {
+        console.warn(err.message);
+        res.status(500).send({ok: false});
+      }
+      if (err && err.message.indexOf('E11000 ') !== -1) {
+        console.warn('ID already present in DB');
+        res.status(500).send({ok: false});
+      }
+      db.close();
+      res.send({'ok': true});
+    });
+  });
+});
+
 app.post('/plog', function(req, res) {
+  var apikey = req.query.apiKey;
   var title = req.body.title;
   var content = req.body.content;
   var time = new Date();
@@ -71,18 +126,32 @@ app.post('/plog', function(req, res) {
     'time': time
   };
   mongo.Db.connect(mongoUri, function (err, db) {
-    db.collection(DB_NAME, function(er, collection) {
-      collection.insert(obj, {'safe':true}, function(err, objects) {
-        if (err) {
+    db.collection(COLLECTION_SESSION, function(er, collection) {
+      collection.find({ 'apiKey': apikey}).toArray(function (e, docs) {
+        if (e) {
           console.warn(err.message);
           res.status(500).send({ok: false});
         }
-        if (err && err.message.indexOf('E11000 ') !== -1) {
-          console.warn('ID already present in DB');
-          res.status(500).send({ok: false});
+        if (docs.length == 1) {
+          db.collection(COLLECTION_POSTS, function(er, collection) {
+            collection.insert(obj, {'safe':true}, function(err, objects) {
+              if (err) {
+                console.warn(err.message);
+                res.status(500).send({ok: false});
+              }
+              if (err && err.message.indexOf('E11000 ') !== -1) {
+                console.warn('ID already present in DB');
+                res.status(500).send({ok: false});
+              }
+              db.close();
+              res.send({ok: true});
+            });
+          });
         }
-        db.close();
-        res.send({ok: true});
+        else {
+          console.warn('API Key Invalid: ' + apikey);
+          res.status(403).send({ok: false});
+        }
       });
     });
   });
