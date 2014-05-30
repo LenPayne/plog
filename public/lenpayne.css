@@ -51,3 +51,6 @@ article {
 	margin-bottom: 1em;
 	border-bottom: 1px #048 double;
 }
+article h1 {
+	font-size: 1.6em;
+}
