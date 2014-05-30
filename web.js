@@ -61,8 +61,8 @@ app.get('/plog', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-  var user = req.body.user;
-  var pass = req.body.pass;
+  var user = req.query.user;
+  var pass = req.query.pass;
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_USERS, function(er, collection) {
       var cursor = collection.find({ 'user': user});
