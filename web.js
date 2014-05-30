@@ -61,13 +61,14 @@ app.get('/plog', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-  var user = req.query.user;
-  var pass = req.query.pass;
+  var user = unescape(req.query.user);
+  var pass = unescape(req.query.pass);
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_USERS, function(er, collection) {
       var cursor = collection.findOne({ 'user': user}, function (err, doc) {
         //TODO: Issue with password not being accepted. I should probably just make a rough registration/approval process.
         console.log(user);
+        console.log(pass);
         console.log(doc.user);
         console.log(doc.pass);
         var login = scrypt.verify(doc.pass, pass);
