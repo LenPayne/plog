@@ -175,10 +175,10 @@ app.post('/plog/:title', function(req, res) {
     db.collection(COLLECTION_SESSION, function(er, collection) {
       collection.findOne({ 'apiKey': apikey}, function (e, doc) {
         if (e) {
-          console.warn(err.message);
+          console.warn(e.message);
           res.status(500).send({ok: false});
         }
-        if (doc.expires > (new Date()).getTime()) {
+        else if (doc.expires > (new Date()).getTime()) {
           db.collection(COLLECTION_POSTS, function(er, collection) {
             collection.insert(obj, {'safe':true}, function(err, objects) {
               if (err) {
