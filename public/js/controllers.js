@@ -13,7 +13,7 @@ plogControllers.controller('PostListCtrl', ['$scope', 'Post',
 plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
   function($scope, $routeParams, Post) {
     $scope.post = Post.get({title: $routeParams.title}, function(Post) {
-      $scope.mainImageUrl = Post.images[0];
+
     });
 
     $scope.setImage = function(imageUrl) {
@@ -30,8 +30,11 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post', '$location',
       post.apiKey = $('#apiKey').val();
       post.title = $scope.title;
       post.content = $scope.content;
-      post.$save(function (post) {
-        $location.path('/posts/' + post.title);
+      post.$save(function (val) {
+        console.log($scope.title);
+        console.log(post.title);
+        console.log(JSON.stringify(val));
+        $location.path('/posts/' + $scope.title);
       },
       function(httpResponse) {
         $scope.error = JSON.stringify(httpResponse);
