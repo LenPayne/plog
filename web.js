@@ -54,18 +54,25 @@ app.get('/plog', function(req, res) {
     db.collection(COLLECTION_POSTS, function(er, collection) {
       collection.find({ 'title': { '$exists' : true}, 'content': { '$exists': true}}).toArray(function (e, docs) {
         db.close();
-        res.send(docs);
+        if (docs)
+          res.send(docs);
+        else
+          res.status(404).send([{title: "List Not Found", content: "No entries were found"}]);
       });
     });
   });
 });
 
 app.get('/plog/:postId', function(req, res) {
+  var postId = unescape(req.param.postId);
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_POSTS, function(er, collection) {
-      collection.findOne({ 'title': req.param.postId }, function (e, doc) {
+      collection.findOne({ 'title': postId }, function (e, doc) {
         db.close();
-        res.send(doc);
+        if (doc)
+          res.send(doc);
+        else
+          res.status(404).send({title: "Resource Not Found", content: "No entry found by that title"});
       });
     });
   });
