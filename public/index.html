@@ -33,40 +33,7 @@
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="lenpayne.css" />
-		<script>
-			$(document).on('ready', function() {
-				$('#login').on('click', function() {
-					$.getJSON("/login",
-						{
-							user: $('#user').val(),
-							pass: $('#pass').val()
-						},
-						function(data) {
-							$('#user').val('');
-							$('#pass').val('');
-							$('#apiKey').val(data.apiKey);
-						}
-					);
-					return false;
-				});
-
-				$('#register').on('click', function() {
-					$.post("/login",
-						{
-							user: $('#user').val(),
-							pass: $('#pass').val()
-						},
-						function(data) {
-							$('#user').val('');
-							$('#pass').val('');
-							$('#apiKey').val(data.apiKey);
-						}
-					);
-					return false;
-				});
-			});
-		</script>
+		<link rel="stylesheet" type="text/css" href="lenpayne.css" />	
 	</head>
 	<body>
 		<div class="container">
@@ -105,20 +72,19 @@
 					</div>
 					<button type="button" class="btn form-control" data-toggle="collapse" data-target="#admin">Admin Panel <span class="glyphicon glyphicon-chevron-down"></span></button>
 					<div id="admin" class="collapse container-fluid">
-						<div class="row">
+						<div class="row" ng-controller="LoginCtrl">
 								<div class="input-group">
 									<span class="input-group-addon">Username:</span>
-									<input class="form-control" id="user" name="user" type="text" />
+									<input class="form-control" ng-model="user" type="text" />
 								</div>
 								<div class="input-group">
 									<span class="input-group-addon">Password:</span>
-									<input class="form-control" id="pass" name="pass" type="password" />
+									<input class="form-control" ng-model="pass" type="password" />
 								</div>
 								<div class="btn-group col-md-offset-6">
 									<button class="btn btn-default" id="register">Register</button>
-									<button class="btn btn-primary" id="login">Login</button>
+									<button class="btn btn-primary" ng-click="login()">Login</button>
 								</div>
-								<input type="hidden" id="apiKey" />
 						</div>
 					</div>
 					<a class="twitter-timeline" href="https://twitter.com/LenAtLambton" data-widget-id="468532220223700992">Tweets by @LenAtLambton</a>

@@ -21,23 +21,32 @@ plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
     }
   }]);
 
-plogControllers.controller('NewPostCtrl', ['$scope', 'Post', '$location',
-  function($scope, Post, $location) {
+plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location',
+  function($scope, Post, Login, $location) {
     $scope.error = '';
+
+    $scope.showKey = function() {
+      $scope.error = Login.apiKey;
+    }
 
     $scope.newPost = function() {
       var post = new Post;
-      post.apiKey = $('#apiKey').val();
+      post.apiKey = Login.apiKey;
+      console.log('Login.apiKey = ' + Login.apiKey);
       post.title = $scope.title;
       post.content = $scope.content;
       post.$save(function (val) {
-        console.log($scope.title);
-        console.log(post.title);
-        console.log(JSON.stringify(val));
         $location.path('/posts/' + $scope.title);
       },
       function(httpResponse) {
         $scope.error = JSON.stringify(httpResponse);
       });
+    }
+  }]);
+
+plogControllers.controller('LoginCtrl', ['$scope', 'Login',
+  function($scope, Login) {
+    $scope.login = function() {
+      Login.send($scope.user, $scope.pass);
     }
   }]);
