@@ -7,7 +7,7 @@ var plogControllers = angular.module('plogControllers', []);
 plogControllers.controller('PostListCtrl', ['$scope', 'Post',
   function($scope, Post) {
     $scope.posts = Post.query();
-    $scope.orderProp = '_id';
+    $scope.orderProp = '-time';
   }]);
 
 plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
