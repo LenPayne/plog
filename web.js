@@ -68,11 +68,15 @@ app.get('/plog/:postId', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_POSTS, function(er, collection) {
       collection.findOne({ 'title': postId }, function (e, doc) {
+        console.log('/plog/:postId Diagnostics');
+        console.log(postId);
+        console.log(doc);
+        console.log(e);
         db.close();
         if (doc)
           res.send(doc);
         else
-          res.status(404).send({title: "Resource Not Found", content: "No entry found by that title"});
+          res.send({title: "Resource Not Found", content: "No entry found by that title"});
       });
     });
   });
