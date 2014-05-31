@@ -178,7 +178,7 @@ app.post('/plog/:title', function(req, res) {
           console.warn(err.message);
           res.status(500).send({ok: false});
         }
-        if (doc.expires > (new Date())) {
+        if (doc.expires > (new Date()).getTime()) {
           db.collection(COLLECTION_POSTS, function(er, collection) {
             collection.insert(obj, {'safe':true}, function(err, objects) {
               if (err) {
