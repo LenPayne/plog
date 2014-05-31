@@ -12,7 +12,7 @@ plogControllers.controller('PostListCtrl', ['$scope', 'Post',
 
 plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
   function($scope, $routeParams, Post) {
-    $scope.post = Post.get({postId: $routeParams.PostId}, function(Post) {
+    $scope.post = Post.get({postId: $routeParams.postId}, function(Post) {
       $scope.mainImageUrl = Post.images[0];
     });
 
