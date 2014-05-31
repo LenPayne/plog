@@ -43,7 +43,9 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location
 plogControllers.controller('LoginCtrl', ['$scope', 'Login', '$http',
   function($scope, Login, $http) {
     $scope.error = '';
-
+    $scope.logoutForm = 'hidden';
+    $scope.loginForm = 'show';
+    
     $scope.login = function() {
       $http({method: 'GET', url: '/login', params: {"user": $scope.user, "pass": $scope.pass}})
         .success(function(data, status) {

@@ -148,7 +148,7 @@ app.post('/expire/:apiKey', function(req, res) {
   var apikey = req.params.apiKey;
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_SESSION, function(er, collection) {
-      collection.findAndModify({ "apiKey": apikey}, { "$set": {"expires": new Date()}}, function (e, doc) {
+      collection.findAndModify({ "apiKey": apikey}, [['expires', 'desc']], { "$set": {"expires": new Date()}}, function (e, doc) {
         if (e) {
           console.warn(e.message);
           res.status(500).send({ok: false});
