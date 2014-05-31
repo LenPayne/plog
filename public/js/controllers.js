@@ -35,7 +35,7 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location
         $location.path('/posts/' + $scope.title);
       },
       function(httpResponse) {
-        $scope.error = 'Error Saving Post: Status ' + httpResponse.data.status + ' - ' + httpResponse.data.statusText;
+        $scope.error = 'Error Saving Post: Status ' + httpResponse.status + ' - ' + httpResponse.statusText;
       });
     }
   }]);
@@ -45,7 +45,7 @@ plogControllers.controller('LoginCtrl', ['$scope', 'Login', '$http',
     $scope.error = '';
     $scope.logoutForm = 'hidden';
     $scope.loginForm = 'show';
-    
+
     $scope.login = function() {
       $http({method: 'GET', url: '/login', params: {"user": $scope.user, "pass": $scope.pass}})
         .success(function(data, status) {
