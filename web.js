@@ -156,7 +156,7 @@ app.post('/expire/:apiKey', function(req, res) {
         else {
           res.send({ok: true});
         }
-      }
+      });
     }
   }
 });
