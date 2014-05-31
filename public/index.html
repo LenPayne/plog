@@ -56,6 +56,37 @@
 					updatePosts();
 					return false;
 				});
+
+				$('#login').on('click', function() {
+					$.getJSON("/login",
+						{
+							user: $('#user').val(),
+							pass: $('#pass').val()
+						},
+						function(data) {
+							$('#user').val('');
+							$('#pass').val('');
+							$('#output').text(data.apiKey);
+						}
+					);
+					return false;
+				});
+
+				$('#register').on('click', function() {
+					$.post("/login",
+						{
+							user: $('#user').val(),
+							pass: $('#pass').val()
+						},
+						function(data) {
+							$('#user').val('');
+							$('#pass').val('');
+							$('#output').text(data.apiKey);
+						}
+					);
+					return false;
+				});
+
 				updatePosts();
 			});
 		</script>
@@ -103,9 +134,25 @@
 							<a class="col-xs-10 lbl" href="http://www.youtube.com/watch?v=Q0kjiIH6u-M&list=PLBmeNj1-Qt2ZucuAzoZQjOxscrWwYTii_&feature=share">AndEngine Tutorials</a>
 						</div>
 					</div>
+					<button type="button" class="btn form-control" data-toggle="collapse" data-target="#admin">Admin Panel <span class="glyphicon glyphicon-chevron-down"></span></button>
+					<div id="admin" class="collapse container-fluid">
+						<div class="row">
+								<div class="input-group">
+									<span class="input-group-addon">Username:</span>
+									<input class="form-control" id="user" name="user" type="text" />
+								</div>
+								<div class="input-group">
+									<span class="input-group-addon">Password:</span>
+									<input class="form-control" id="pass" name="pass" type="password" />
+								</div>
+								<div class="btn-group col-md-offset-6">
+									<button class="btn btn-default" id="register">Register</button>
+									<button class="btn btn-primary" id="login">Login</button>
+								</div>
+						</div>
+					</div>
 					<a class="twitter-timeline" href="https://twitter.com/LenAtLambton" data-widget-id="468532220223700992">Tweets by @LenAtLambton</a>
 					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-					<h3><a href="register.html">Register</a>/<a href="login.html">Login</a></h3>
 				</aside>
 			</div>
 		</div>
