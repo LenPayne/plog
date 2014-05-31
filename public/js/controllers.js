@@ -32,7 +32,6 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location
       post.title = $scope.title;
       post.content = $scope.content;
       post.$save(function (val) {
-        console.log(JSON.stringify(val));
         $location.path('/posts/' + $scope.title);
       },
       function(httpResponse) {
