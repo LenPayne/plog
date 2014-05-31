@@ -157,8 +157,8 @@ app.post('/expire/:apiKey', function(req, res) {
           res.send({ok: true});
         }
       });
-    }
-  }
+    });
+  });
 });
 
 app.post('/plog/:title', function(req, res) {
