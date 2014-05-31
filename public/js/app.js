@@ -17,9 +17,13 @@ plogApp.config(['$routeProvider',
         templateUrl: 'partials/list.html',
         controller: 'PostListCtrl'
       }).
-      when('/posts/:postId', {
+      when('/posts/:title', {
         templateUrl: 'partials/detail.html',
         controller: 'PostDetailCtrl'
+      }).
+      when('/new', {
+        templateUrl: 'partials/new.html',
+        controller: 'NewPostCtrl'
       }).
       otherwise({
         redirectTo: '/posts'

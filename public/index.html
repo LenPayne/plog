@@ -36,20 +36,6 @@
 		<link rel="stylesheet" type="text/css" href="lenpayne.css" />
 		<script>
 			$(document).on('ready', function() {
-				$('#newpost').on('submit', function() {
-					$.post("/plog",
-						{
-							title: $('#title').val(),
-							content: $('#content').val()
-						},
-						function() {
-							$('#title').val('');
-							$('#content').val('');
-						}
-					);
-					return false;
-				});
-
 				$('#login').on('click', function() {
 					$.getJSON("/login",
 						{
@@ -59,7 +45,7 @@
 						function(data) {
 							$('#user').val('');
 							$('#pass').val('');
-							$('#output').text(data.apiKey);
+							$('#apiKey').val(data.apiKey);
 						}
 					);
 					return false;
@@ -74,7 +60,7 @@
 						function(data) {
 							$('#user').val('');
 							$('#pass').val('');
-							$('#output').text(data.apiKey);
+							$('#apiKey').val(data.apiKey);
 						}
 					);
 					return false;
@@ -90,14 +76,6 @@
 						<h1>Len Payne</h1>
 					</header>
 					<div ng-view></div>
-					<form id="newpost">
-						<div class="row">
-							<div class="col-md-10">
-								<div class="form-group"><label for="title">Title:</label><input class="form-control" id="title" name="title" type="text" /></div>
-								<div class="form-group"><label for="content">Content:</label><textarea rows="8" class="form-control" id="content" name="content"></textarea></div>
-								<div class="form-group col-md-4 col-md-offset-4"><input class="form-control" id="submit" type="submit" /></div>
-							</div>
-					</form>
 				</main>
 				<aside class="col-md-4">
 					<header>
@@ -140,6 +118,7 @@
 									<button class="btn btn-default" id="register">Register</button>
 									<button class="btn btn-primary" id="login">Login</button>
 								</div>
+								<input type="hidden" id="apiKey" />
 						</div>
 					</div>
 					<a class="twitter-timeline" href="https://twitter.com/LenAtLambton" data-widget-id="468532220223700992">Tweets by @LenAtLambton</a>

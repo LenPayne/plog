@@ -63,12 +63,12 @@ app.get('/plog', function(req, res) {
   });
 });
 
-app.get('/plog/:postId', function(req, res) {
+app.get('/plog/:title', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_POSTS, function(er, collection) {
-      collection.findOne({ 'title': unescape(req.params.postId) }, function (e, doc) {
-        console.log('/plog/:postId Diagnostics');
-        console.log('postId: ' + unescape(req.params.postId));
+      collection.findOne({ 'title': unescape(req.params.title) }, function (e, doc) {
+        console.log('/plog/:title Diagnostics');
+        console.log('title: ' + unescape(req.params.title));
         console.log('doc: ' + doc);
         console.log('e: ' + e);
         db.close();
@@ -144,9 +144,9 @@ app.post('/login', function(req, res) {
   });
 });
 
-app.post('/plog', function(req, res) {
+app.post('/plog/:title', function(req, res) {
   var apikey = req.query.apiKey;
-  var title = req.body.title;
+  var title = req.params.title;
   var content = req.body.content;
   var time = new Date();
   var obj = {
