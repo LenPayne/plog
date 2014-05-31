@@ -7,7 +7,7 @@
 	and used according to terms described in the Creative Commons 3.0 Attribution License.
 
 -->
-<html>
+<html ng-app="plogApp">
 	<head>
 		<script type="text/javascript" src="modernizr.custom.10997.js"></script>
 		<title>Len Payne - Web Developer and Educator with International Experience</title>
@@ -21,26 +21,19 @@
 		  ga('send', 'pageview');
 
 		</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-resource.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/controllers.js"></script>
+		<script src="js/filters.js"></script>
+		<script src="js/services.js"></script>
 		<script src="http://code.jquery.com/jquery.min.js"></script>
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="lenpayne.css" />
 		<script>
-			function updatePosts() {
-				$.getJSON('/plog', function(data) {
-					var output = '';
-					for (var i = 0; i < data.length; i++) {
-						output+='<article>';
-						output+='<h1>' + data[i].title + '</h1>';
-						output+='<p>' + data[i].content + '</p>';
-						output+='<p><a href="/page/' + data[i].title +'">Read More</a></p>';
-						output+='</article>';
-					}
-					$('#posts').html(output);
-				})
-			}
-
 			$(document).on('ready', function() {
 				$('#newpost').on('submit', function() {
 					$.post("/plog",
@@ -53,7 +46,6 @@
 							$('#content').val('');
 						}
 					);
-					updatePosts();
 					return false;
 				});
 
@@ -86,8 +78,6 @@
 					);
 					return false;
 				});
-
-				updatePosts();
 			});
 		</script>
 	</head>
@@ -98,7 +88,7 @@
 					<header>
 						<h1>Len Payne</h1>
 					</header>
-					<div id="posts"></div>
+					<div ng-view></div>
 					<form id="newpost">
 						<div class="row">
 							<div class="col-md-10">

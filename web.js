@@ -60,6 +60,17 @@ app.get('/plog', function(req, res) {
   });
 });
 
+app.get('/plog/:postId', function(req, res) {
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection(COLLECTION_POSTS, function(er, collection) {
+      collection.find({ 'title': req.param.postId }).toArray(function (e, docs) {
+        db.close();
+        res.send(docs);
+      });
+    });
+  });
+});
+
 app.get('/login', function(req, res) {
   var user = unescape(req.query.user);
   var pass = unescape(req.query.pass);
