@@ -25,10 +25,6 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location
   function($scope, Post, Login, $location) {
     $scope.error = '';
 
-    $scope.showKey = function() {
-      $scope.error = Login.apiKey;
-    }
-
     $scope.newPost = function() {
       var post = new Post;
       post.apiKey = Login.apiKey;
@@ -36,6 +32,7 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location
       post.title = $scope.title;
       post.content = $scope.content;
       post.$save(function (val) {
+        console.log(JSON.stringify(val));
         $location.path('/posts/' + $scope.title);
       },
       function(httpResponse) {
