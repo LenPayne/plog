@@ -13,15 +13,17 @@ plogServices.factory('Post', ['$resource',
 
 plogServices.factory('Login', ['$http',
   function($http) {
-    var apiKey = '';
-    var send = function (user, pass) {
-      $http({method: 'GET', url: '/login', params: {"user": user, "pass": pass}})
-        .success(function(data, status) {
-          apiKey = data.apiKey;
-        })
-        .error(function(data, status) {
-          apiKey = '';
-        });
+    return {
+      apiKey : '',
+      send : function (user, pass) {
+        $http({method: 'GET', url: '/login', params: {"user": user, "pass": pass}})
+          .success(function(data, status) {
+            this.apiKey = data.apiKey;
+          })
+          .error(function(data, status) {
+            apiKey = '';
+          });
+        }
     }
   }
 ]);
