@@ -26,8 +26,8 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post',
     $scope.newPost = function() {
       var post = new Post;
       post.apiKey = $('#apiKey').val();
-      post.title = $scope.post.title;
-      post.content = $scope.post.content;
+      post.title = $scope.title;
+      post.content = $scope.content;
       post.$save();
     }
   }]);
