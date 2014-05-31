@@ -144,6 +144,23 @@ app.post('/login', function(req, res) {
   });
 });
 
+app.post('/expire/:apiKey', function(req, res) {
+  var apikey = req.params.apiKey;
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection(COLLECTION_SESSION, function(er, collection) {
+      collection.findAndModify({ "apiKey": apikey}, { "$set": {"expires": new Date()}}, function (e, doc) {
+        if (e) {
+          console.warn(err.message);
+          res.status(500).send({ok: false});
+        }
+        else {
+          res.send({ok: true});
+        }
+      }
+    }
+  }
+});
+
 app.post('/plog/:title', function(req, res) {
   var apikey = req.query.apiKey;
   var title = req.params.title;
@@ -156,12 +173,12 @@ app.post('/plog/:title', function(req, res) {
   };
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_SESSION, function(er, collection) {
-      collection.find({ 'apiKey': apikey}).toArray(function (e, docs) {
+      collection.findOne({ 'apiKey': apikey}, function (e, doc) {
         if (e) {
           console.warn(err.message);
           res.status(500).send({ok: false});
         }
-        if (docs.length == 1) {
+        if (doc.expires > (new Date())) {
           db.collection(COLLECTION_POSTS, function(er, collection) {
             collection.insert(obj, {'safe':true}, function(err, objects) {
               if (err) {
@@ -178,7 +195,7 @@ app.post('/plog/:title', function(req, res) {
           });
         }
         else {
-          console.warn('API Key Invalid: ' + apikey);
+          console.warn('API Key Invalid or Expired: ' + apikey);
           res.status(403).send({ok: false});
         }
       });
