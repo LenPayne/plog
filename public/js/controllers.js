@@ -30,7 +30,7 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post', '$location',
       post.apiKey = $('#apiKey').val();
       post.title = $scope.title;
       post.content = $scope.content;
-      post.$save(function () {
+      post.$save(function (post) {
         $location.path('/posts/' + post.title);
       },
       function(httpResponse) {
