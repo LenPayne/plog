@@ -2,7 +2,7 @@
   <option value="_id">ID</option>
   <option value="title">Title</option>
 </select>
-<article ng-repeat="post in posts | orderBy orderProp">
+<article ng-repeat="post in posts | orderBy:orderProp">
 	<h1>{{post.title}}</h1>
 	<p>{{post.content}}</p>
 	<p><a href="#/posts/{{post.title}}">Read More</a></p>
