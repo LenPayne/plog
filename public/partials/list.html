@@ -1,12 +1,12 @@
-<label>Sort By: </label>
-<div class="btn-group">
-  <button ng-click="orderProp='_id'" class="btn btn-default"><span class="glyphicon glyphicon-calendar"></span><span class="glyphicon glyphicon-arrow-down"></span></button>
-  <button ng-click="orderProp='-_id'" class="btn btn-default"><span class="glyphicon glyphicon-calendar"></span><span class="glyphicon glyphicon-arrow-up"></span></button>
-  <button ng-click="orderProp='title'" class="btn btn-default">A</span><span class="glyphicon glyphicon-arrow-down"></span></button>
-  <button ng-click="orderProp='-title'" class="btn btn-default">A</span><span class="glyphicon glyphicon-arrow-up"></span></button>
-</div>
 <article ng-repeat="post in posts | orderBy:orderProp">
 	<h1>{{post.title}}</h1>
 	<div ng-bind-html="post.content"></div>
 	<p><a href="#/posts/{{post.title}}">Read More</a></p>
 </article>
+<label>Sort By: </label>
+<div class="btn-group">
+  <button ng-click="orderProp='_id'" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-calendar"></span><span class="glyphicon glyphicon-arrow-down"></span></button>
+  <button ng-click="orderProp='-_id'" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-calendar"></span><span class="glyphicon glyphicon-arrow-up"></span></button>
+  <button ng-click="orderProp='title'" class="btn btn-default btn-xs">A</span><span class="glyphicon glyphicon-arrow-down"></span></button>
+  <button ng-click="orderProp='-title'" class="btn btn-default btn-xs">A</span><span class="glyphicon glyphicon-arrow-up"></span></button>
+</div>
