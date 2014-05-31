@@ -47,6 +47,12 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location
 plogControllers.controller('LoginCtrl', ['$scope', 'Login',
   function($scope, Login) {
     $scope.login = function() {
-      Login.send($scope.user, $scope.pass);
+      $http({method: 'GET', url: '/login', params: {"user": $scope.user, "pass": $scope.pass}})
+        .success(function(data, status) {
+          Login.apiKey = data.apiKey;
+        })
+        .error(function(data, status) {
+          Login.apiKey = '';
+        });
     }
   }]);
