@@ -36,7 +36,7 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location
         $location.path('/posts/' + $scope.title);
       },
       function(httpResponse) {
-        $scope.error = JSON.stringify(httpResponse);
+        console.log(JSON.stringify(httpResponse));
       });
     }
   }]);
