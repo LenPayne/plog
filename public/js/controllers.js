@@ -21,7 +21,7 @@ plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
     }
   }]);
 
-plogControllers.controller('NewPostCtrl', ['$scope', 'Post', '$location'
+plogControllers.controller('NewPostCtrl', ['$scope', 'Post', '$location',
   function($scope, Post, $location) {
     $scope.error = '';
 
