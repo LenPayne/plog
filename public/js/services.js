@@ -22,6 +22,6 @@ plogServices.factory('Login', ['$http',
         .error(function(data, status) {
           apiKey = '';
         });
-
+    }
   }
-])
+]);
