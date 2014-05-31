@@ -36,7 +36,7 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location
         $location.path('/posts/' + $scope.title);
       },
       function(httpResponse) {
-        console.log(JSON.stringify(httpResponse));
+        $scope.error = 'Error Saving Post: Status ' + httpResponse.data.status + ' - ' + httpResponse.data.statusText;
       });
     }
   }]);
