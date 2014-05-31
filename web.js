@@ -66,9 +66,9 @@ app.get('/plog', function(req, res) {
 app.get('/plog/:postId', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_POSTS, function(er, collection) {
-      collection.findOne({ 'title': unescape(req.param.postId) }, function (e, doc) {
+      collection.findOne({ 'title': unescape(req.params.postId) }, function (e, doc) {
         console.log('/plog/:postId Diagnostics');
-        console.log('postId: ' + unescape(req.param.postId));
+        console.log('postId: ' + unescape(req.params.postId));
         console.log('doc: ' + doc);
         console.log('e: ' + e);
         db.close();
