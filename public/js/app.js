@@ -4,6 +4,7 @@
 
 var plogApp = angular.module('plogApp', [
   'ngRoute',
+  'ngSanitize',
   'plogControllers',
   'plogFilters',
   'plogServices'

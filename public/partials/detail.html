@@ -1,5 +1,5 @@
 <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Back to List</a>
 <h1>{{post.title}}</h1>
-<p>{{post.content}}</p>
+<div ng-bind-html="post.content"></div>
 <p><a href="#/posts/{{post.title}}">Read More</a></p>
 </article>
