@@ -14,7 +14,7 @@ plogApp.config(['$routeProvider',
     $routeProvider.
       when('/posts', {
         templateUrl: 'partials/list.html',
-        controller: 'PlogListCtrl'
+        controller: 'PostListCtrl'
       }).
       when('/posts/:postId', {
         templateUrl: 'partials/detail.html',
