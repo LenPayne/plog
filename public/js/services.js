@@ -11,10 +11,8 @@ plogServices.factory('Post', ['$resource',
     });
   }]);
 
-plogServices.factory('Login', ['$http', 'Login',
-  function($http) {
+plogServices.factory('Login', function() {
     return {
-      apiKey : ''      
+      apiKey : ''
     }
-  }
-]);
+  });
