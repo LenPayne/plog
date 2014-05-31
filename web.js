@@ -63,9 +63,9 @@ app.get('/plog', function(req, res) {
 app.get('/plog/:postId', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_POSTS, function(er, collection) {
-      collection.find({ 'title': req.param.postId }).toArray(function (e, docs) {
+      collection.findOne({ 'title': req.param.postId }, function (e, doc) {
         db.close();
-        res.send(docs);
+        res.send(doc);
       });
     });
   });
