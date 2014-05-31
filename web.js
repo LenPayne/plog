@@ -150,7 +150,7 @@ app.post('/expire/:apiKey', function(req, res) {
     db.collection(COLLECTION_SESSION, function(er, collection) {
       collection.findAndModify({ "apiKey": apikey}, { "$set": {"expires": new Date()}}, function (e, doc) {
         if (e) {
-          console.warn(err.message);
+          console.warn(e.message);
           res.status(500).send({ok: false});
         }
         else {
