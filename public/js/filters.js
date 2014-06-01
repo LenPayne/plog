@@ -2,8 +2,8 @@
 
 /* Filters */
 
-angular.module('plogFilters', []).filter('checkmark', function() {
+angular.module('plogFilters', []).filter('niceTime', function() {
   return function(input) {
-    return input ? '\u2713' : '\u2718';
+    return (new Date(input)).toUTCString();
   };
 });
