@@ -10,6 +10,19 @@ plogControllers.controller('PostListCtrl', ['$scope', 'Post', 'Config',
     $scope.pageSize = Config.paging;
     $scope.currentPage = 0;
     $scope.orderProp = '-time';
+
+    $scope.checkConfig = function() {
+      $http({method: 'GET', url: '/config'})
+        .success(function(data, status) {
+          Config.canRegister = data.canRegister;
+          if (Config.canRegister)
+            $scope.registerForm = 'show';
+          else
+            $scope.registerForm = 'hidden';
+          Config.paging = data.paging;
+        });
+    };
+    $scope.checkConfig();
   }]);
 
 plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
