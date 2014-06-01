@@ -45,6 +45,14 @@ plogControllers.controller('LoginCtrl', ['$scope', 'Login', '$http',
     $scope.error = '';
     $scope.logoutForm = 'hidden';
     $scope.loginForm = 'show';
+    $scope.adminArrow = 'glyphicon-chevron-up';
+
+    $scope.toggleChevron = function() {
+      if ($scope.adminArrow === 'glyphicon-chevron-up')
+        $scope.adminArrow = 'glyphicon-chevron-down'
+      else
+        $scope.adminArrow = 'glyphicon-chevron-up';
+    }
 
     $scope.login = function() {
       $http({method: 'GET', url: '/login', params: {"user": $scope.user, "pass": $scope.pass}})
