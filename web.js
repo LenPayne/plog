@@ -91,7 +91,7 @@ app.get('/login', function(req, res) {
           var expires = microtime + 1000 * SESSION_TIMEOUT;
           var keyFeed = expires + '#' + user;
           var apikey = md5(keyFeed);
-          var obj = { 'apiKey': apikey, 'expires': expires};
+          var obj = { 'apiKey': apikey, 'expires': new Date(expires)};
           db.collection(COLLECTION_SESSION, function(er, collection) {
             collection.insert(obj, {'safe':true}, function(err, objects) {
               if (err) {
@@ -190,7 +190,7 @@ app.post('/plog/:title', function(req, res) {
           console.warn(e.message);
           res.status(500).send({ok: false});
         }
-        else if (doc && doc.expires > (new Date()).getTime()) {
+        else if (doc && doc.expires > (new Date())) {
           db.collection(COLLECTION_POSTS, function(er, collection) {
             collection.insert(obj, {'safe':true}, function(err, objects) {
               if (err) {
