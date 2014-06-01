@@ -75,6 +75,10 @@
 					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 				</aside>
 			</div>
+			<footer class="row">
+				<p class="col-md-4 col-md-offset-4">Copyright &copy; 2014 Len Payne &bull; <a href="http://www.lenpayne.ca">www.LenPayne.ca</a></p>
+			</footer>
+			<div class="row">&nbsp;</div>
 		</div>
 		<div id="adminPanel" class="col-md-3" ng-controller="LoginCtrl">
 			<button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" ng-click="toggleChevron()"
@@ -95,7 +99,10 @@
 						</div>
 				</div>
 				<div class="row" ng-class="logoutForm">
+					<div class="btn-group col-md-offset-6">
+						<a class="btn btn-default btn-xs" ng-class="logoutForm" href="#/new">New Post <span class="glyphicon glyphicon-plus"></span></a>
 						<button class="btn btn-primary" ng-click="logout()">Logout</button>
+					</div>
 				</div>
 			</div>
 		</div>
