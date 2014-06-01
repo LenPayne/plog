@@ -4,9 +4,11 @@
 
 var plogControllers = angular.module('plogControllers', []);
 
-plogControllers.controller('PostListCtrl', ['$scope', 'Post',
-  function($scope, Post) {
+plogControllers.controller('PostListCtrl', ['$scope', 'Post', 'Config',
+  function($scope, Post, Config) {
     $scope.posts = Post.query();
+    $scope.pageSize = Config.paging;
+    $scope.currentPage = 0;
     $scope.orderProp = '-time';
   }]);
 
