@@ -20,6 +20,7 @@ plogControllers.controller('PostListCtrl', ['$scope', 'Post', 'Config', '$http',
           else
             $scope.registerForm = 'hidden';
           Config.paging = data.paging;
+          $scope.pageSize = Config.paging;
         });
     };
     $scope.checkConfig();
