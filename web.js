@@ -55,7 +55,7 @@ app.get('/', function(req, res) {
 });
 
 //== "Web Server" Route => Translate Any File Request to Public Folder
-app.get(/^\/([\w\-\.\/]*\.(?:html|css|js|gif|png|jpeg|jpg|ico))$/, function(req, res) {
+app.get(/^\/([\w\-\.\/]*\.(?:html|css|js|gif|png|jpeg|jpg|ico|pdf))$/, function(req, res) {
   var filename = path.join('public', req.params[0]);
   fs.exists(filename, function(exists) {
     if (exists)

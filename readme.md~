@@ -13,13 +13,3 @@ used to. Some basic configuration notes for the DB:
 * The **plog_posts** collection has a Unique Index set on the title field.
 
 See this in the wild at my personal website, [www.LenPayne.ca](http://www.lenpayne.ca).
-
-TODO List
----------
-
-The following major features are planned but not yet functional:
-
-* Editing Posts
-* "Sticky" Posts
-* Excerpts for Long Posts
-* Better Authoring Tools for Posts (WYSIWYG, MD)
