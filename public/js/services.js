@@ -16,3 +16,10 @@ plogServices.factory('Login', function() {
       apiKey : ''
     }
   });
+
+plogServices.factory('Config', function() {    
+    return {
+      canRegister: false,
+      paging: 10
+    }
+  });

@@ -40,19 +40,33 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location
     }
   }]);
 
-plogControllers.controller('LoginCtrl', ['$scope', 'Login', '$http',
-  function($scope, Login, $http) {
+plogControllers.controller('LoginCtrl', ['$scope', 'Login', '$http', 'Config',
+  function($scope, Login, $http, Config) {
     $scope.error = '';
     $scope.logoutForm = 'hidden';
     $scope.loginForm = 'show';
     $scope.adminArrow = 'glyphicon-chevron-up';
+
+    $scope.checkConfig = function() {
+      $http({method: 'GET', url: '/config'})
+        .success(function(data, status) {
+          Config.canRegister = data.canRegister;
+          if (Config.canRegister)
+            $scope.registerForm = 'show';
+          else
+            $scope.registerForm = 'hidden';
+          Config.paging = data.paging;
+        });
+    };
+
+    $scope.checkConfig();
 
     $scope.toggleChevron = function() {
       if ($scope.adminArrow === 'glyphicon-chevron-up')
         $scope.adminArrow = 'glyphicon-chevron-down'
       else
         $scope.adminArrow = 'glyphicon-chevron-up';
-    }
+    };
 
     $scope.login = function() {
       $http({method: 'GET', url: '/login', params: {"user": $scope.user, "pass": $scope.pass}})
@@ -70,7 +84,7 @@ plogControllers.controller('LoginCtrl', ['$scope', 'Login', '$http',
           console.log(JSON.stringify(status));
           Login.apiKey = '';
         });
-    }
+    };
 
     $scope.logout = function() {
       $http({method: 'POST', url: '/expire/' + Login.apiKey})
@@ -85,5 +99,5 @@ plogControllers.controller('LoginCtrl', ['$scope', 'Login', '$http',
           console.log(JSON.stringify(data));
           console.log(JSON.stringify(status));
         });
-    }
+    };
   }]);

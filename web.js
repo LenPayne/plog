@@ -16,6 +16,7 @@ var mongoUri = process.env.MONGOLAB_URI ||
 var COLLECTION_POSTS = 'plog_posts';
 var COLLECTION_SESSION = 'plog_sessions';
 var COLLECTION_USERS = 'plog_users';
+var COLLECTION_CONFIG = 'plog_config';
 var SESSION_TIMEOUT = 600;
 
 var scryptParameters = scrypt.params(0.8);
@@ -67,10 +68,6 @@ app.get('/plog/:title', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_POSTS, function(er, collection) {
       collection.findOne({ 'title': unescape(req.params.title) }, function (e, doc) {
-        console.log('/plog/:title Diagnostics');
-        console.log('title: ' + unescape(req.params.title));
-        console.log('doc: ' + doc);
-        console.log('e: ' + e);
         db.close();
         if (doc)
           res.send(doc);
@@ -113,6 +110,7 @@ app.get('/login', function(req, res) {
         else {
           console.warn('Invalid Login: ' + user);
           res.status(403).send({ok: false});
+          db.close();
         }
       });
     });
@@ -127,21 +125,34 @@ app.post('/login', function(req, res) {
     'pass': scrypt.hash(pass, scryptParameters)
   };
   mongo.Db.connect(mongoUri, function (err, db) {
-    db.collection(COLLECTION_USERS, function(er, collection) {
-      collection.insert(obj, {'safe':true}, function(err, objects) {
-        if (err) {
-          console.warn(err.message);
-          res.status(500).send({ok: false});
-        }
-        if (err && err.message.indexOf('E11000 ') !== -1) {
-          console.warn('ID already present in DB');
-          res.status(500).send({ok: false});
-        }
+    db.collection(COLLECTION_CONFIG, function(er, collection) {
+      collection.findOne({canRegister: {'$exists': true}}, function (e, doc) {
         db.close();
-        res.send({'ok': true});
+        if (doc && doc.canRegister) {
+          mongo.Db.connect(mongoUri, function (err, db) {
+            db.collection(COLLECTION_USERS, function(er, collection) {
+              collection.insert(obj, {'safe':true}, function(err, objects) {
+                if (err && err.message.indexOf('E11000 ') !== -1) {
+                  console.warn('ID already present in DB');
+                  res.status(500).send({ok: false});
+                }
+                else if (err) {
+                  console.warn(err.message);
+                  res.status(500).send({ok: false});
+                }
+                else
+                  res.send({'ok': true});
+                db.close();
+              });
+            });
+          });
+        }
+        else
+          res.status(403).send({ok: false});
       });
     });
   });
+
 });
 
 app.post('/expire/:apiKey', function(req, res) {
@@ -156,6 +167,7 @@ app.post('/expire/:apiKey', function(req, res) {
         else {
           res.send({ok: true});
         }
+        db.close();
       });
     });
   });
@@ -198,6 +210,20 @@ app.post('/plog/:title', function(req, res) {
           console.warn('API Key Invalid or Expired: ' + apikey);
           res.status(403).send({ok: false});
         }
+      });
+    });
+  });
+});
+
+app.get('/config', function(req, res) {
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection(COLLECTION_CONFIG, function(er, collection) {
+      collection.findOne({canRegister: {'$exists': true}}, function (e, doc) {
+        db.close();
+        if (doc)
+          res.send(doc);
+        else
+          res.status(404).send({ok: false});
       });
     });
   });
