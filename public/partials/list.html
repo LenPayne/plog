@@ -2,7 +2,7 @@
 	<h1>{{post.title}}</h1>
   <h5>{{post.time | niceTime}}</h5>
 	<div ng-bind-html="post.content"></div>
-	<p><a href="#/posts/{{post.title}}">Read More</a></p>
+	<h5 class="col-md-4 col-md-offset-8"><a href="#/posts/{{post.title}}">Read More</a></h5>
 </article>
 <label>Sort By: </label>
 <div class="btn-group">
