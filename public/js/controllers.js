@@ -4,8 +4,8 @@
 
 var plogControllers = angular.module('plogControllers', []);
 
-plogControllers.controller('PostListCtrl', ['$scope', 'Post', 'Config',
-  function($scope, Post, Config) {
+plogControllers.controller('PostListCtrl', ['$scope', 'Post', 'Config', '$http',
+  function($scope, Post, Config, $http) {
     $scope.posts = Post.query();
     $scope.pageSize = Config.paging;
     $scope.currentPage = 0;
