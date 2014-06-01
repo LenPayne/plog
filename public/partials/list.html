@@ -1,6 +1,6 @@
 <article ng-repeat="post in posts | orderBy:orderProp">
 	<h1>{{post.title}}</h1>
-  <h3>{{post.time | niceTime}}</h3>
+  <h5>{{post.time | niceTime}}</h5>
 	<div ng-bind-html="post.content"></div>
 	<p><a href="#/posts/{{post.title}}">Read More</a></p>
 </article>

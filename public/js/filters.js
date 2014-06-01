@@ -4,6 +4,6 @@
 
 angular.module('plogFilters', []).filter('niceTime', function() {
   return function(input) {
-    return (new Date(input)).toUTCString();
+    return (new Date(input)).toString();
   };
 });
