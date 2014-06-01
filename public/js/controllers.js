@@ -1,9 +1,27 @@
+// Project: plog
+// File: public/js/controllers.js
+// Author: Len Payne
+//
+// Copyright 2014 Len Payne
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 'use strict';
 
 /* Controllers */
 
 var plogControllers = angular.module('plogControllers', []);
 
+//== Post List Controller - Retrieve Data for the Post List
 plogControllers.controller('PostListCtrl', ['$scope', 'Post', 'Config', '$http',
   function($scope, Post, Config, $http) {
     $scope.posts = Post.query();
@@ -26,6 +44,7 @@ plogControllers.controller('PostListCtrl', ['$scope', 'Post', 'Config', '$http',
     $scope.checkConfig();
   }]);
 
+//== Post Detail Controller - Retrieve Data for a Single Post
 plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
   function($scope, $routeParams, Post) {
     $scope.post = Post.get({title: $routeParams.title}, function(Post) {
@@ -37,6 +56,7 @@ plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
     }
   }]);
 
+//== New Post Controller - Attempts to Persist a New Post
 plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location',
   function($scope, Post, Login, $location) {
     $scope.error = '';
@@ -56,6 +76,7 @@ plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location
     }
   }]);
 
+//== Login Controller - Attempts to Log the User In and Out
 plogControllers.controller('LoginCtrl', ['$scope', 'Login', '$http', 'Config',
   function($scope, Login, $http, Config) {
     $scope.error = '';
