@@ -183,8 +183,7 @@ app.get('/login', function(req, res) {
   mongo.Db.connect(mongoUri, function (err, db) {
     db.collection(COLLECTION_USERS, function(er, collection) {
       var cursor = collection.findOne({ 'user': user}, function (err, doc) {
-        var login = scrypt.verify(doc.pass, pass);
-        if (login) {
+        if (doc && scrypt.verify(doc.pass, pass)) {
           var time = new Date();
           var microtime = time.getTime();
           var expires = microtime + 1000 * SESSION_TIMEOUT;
