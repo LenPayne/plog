@@ -1,4 +1,4 @@
-<article ng-repeat="post in posts | orderBy:orderProp | startFrom:currentPage*pageSize | limitTo:pageSize">
+<article ng-repeat="post in posts | filter:searchText | orderBy:orderProp | startFrom:currentPage*pageSize | limitTo:pageSize">
 	<h1>{{post.title}}</h1>
   <h5>{{post.time | niceTime}}</h5>
 	<div ng-bind-html="post.content"></div>
@@ -10,10 +10,10 @@
 	</h5>
 </article>
 <div>
-	<div class="col-md-4 text-left">
+	<div class="col-xs-4 text-left">
 		<button class="btn btn-primary btn-xs" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1"><span class="glyphicon glyphicon-arrow-left"></span> Prev</button>
 	</div>
-	<div class="col-md-4 text-center">
+	<div class="col-xs-4 text-center">
 		<label>Sort By: </label>
 		<div class="btn-group">
 			<button ng-click="orderProp='time'" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-calendar"></span><span class="glyphicon glyphicon-arrow-down"></span></button>
@@ -21,8 +21,10 @@
 			<button ng-click="orderProp='title'" class="btn btn-default btn-xs">A</span><span class="glyphicon glyphicon-arrow-down"></span></button>
 			<button ng-click="orderProp='-title'" class="btn btn-default btn-xs">A</span><span class="glyphicon glyphicon-arrow-up"></span></button>
 		</div>
+		<label>Search: </label>
+		<input ng-model="searchText" />
 	</div>
-	<div class="col-md-4 text-right">
+	<div class="col-xs-4 text-right">
 		<button class="btn btn-primary btn-xs" ng-disabled="currentPage >= posts.length/pageSize - 1" ng-click="currentPage=currentPage+1">Next <span class="glyphicon glyphicon-arrow-right"></span></button>
 	</div>
 </div>
