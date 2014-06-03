@@ -68,8 +68,8 @@ plogControllers.controller('NewEditPostCtrl', ['$scope', 'Post', 'Login', '$loca
 
     $scope.savePost = function() {
       $scope.post.apiKey = Login.apiKey;
-      post.$save(function (val) {
-        $location.path('/posts/' + $scope.title);
+      $scope.post.$save(function (val) {
+        $location.path('/posts/' + $scope.post.title);
       },
       function(httpResponse) {
         $scope.error = 'Error Saving Post: Status ' + httpResponse.status + ' - ' + httpResponse.statusText;
