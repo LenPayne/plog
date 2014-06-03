@@ -67,10 +67,7 @@ plogControllers.controller('NewEditPostCtrl', ['$scope', 'Post', 'Login', '$loca
     else $scope.post = new Post;
 
     $scope.savePost = function() {
-      post.apiKey = Login.apiKey;
-      console.log('Login.apiKey = ' + Login.apiKey);
-      post.title = $scope.title;
-      post.content = $scope.content;
+      $scope.post.apiKey = Login.apiKey;
       post.$save(function (val) {
         $location.path('/posts/' + $scope.title);
       },
