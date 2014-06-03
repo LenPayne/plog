@@ -50,16 +50,17 @@ plogControllers.controller('PostListCtrl', ['$scope', 'Post', 'Config', '$http',
   }]);
 
 //== Post Detail Controller - Retrieve Data for a Single Post
-plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
-  function($scope, $routeParams, Post) {
+plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post', 'Login',
+  function($scope, $routeParams, Post, Login) {
     $scope.post = Post.get({title: $routeParams.title});
 
-    $scope.setImage = function(imageUrl) {
-      $scope.mainImageUrl = imageUrl;
-    }
+    $scope.editClass = function() {
+      if (Login.apiKey) return 'show';
+      else return 'hidden';
+    };
   }]);
 
-//== New Post Controller - Attempts to Persist a New Post
+//== Modify Post Controller - Attempts to Persist or Delete a Post
 plogControllers.controller('ModifyPostCtrl', ['$scope', 'Post', 'Login', '$location', '$routeParams',
   function($scope, Post, Login, $location, $routeParams) {
     $scope.error = '';
