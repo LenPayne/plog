@@ -40,7 +40,11 @@ plogApp.config(['$routeProvider',
       }).
       when('/new', {
         templateUrl: 'partials/new.html',
-        controller: 'NewPostCtrl'
+        controller: 'NewEditPostCtrl'
+      }).
+      when('/edit/:title', {
+        templateUrl: 'partials/new.html',
+        controller: 'NewEditPostCtrl'
       }).
       otherwise({
         redirectTo: '/posts'

@@ -22,12 +22,17 @@
 var plogControllers = angular.module('plogControllers', []);
 
 //== Post List Controller - Retrieve Data for the Post List
-plogControllers.controller('PostListCtrl', ['$scope', 'Post', 'Config', '$http',
-  function($scope, Post, Config, $http) {
+plogControllers.controller('PostListCtrl', ['$scope', 'Post', 'Config', '$http', 'Login',
+  function($scope, Post, Config, $http, Login) {
     $scope.posts = Post.query();
     $scope.pageSize = Config.paging;
     $scope.currentPage = 0;
     $scope.orderProp = '-time';
+
+    $scope.editClass = function() {
+      if (Login.apiKey) return 'show';
+      else return 'hidden';
+    };
 
     $scope.checkConfig = function() {
       $http({method: 'GET', url: '/config'})
@@ -47,9 +52,7 @@ plogControllers.controller('PostListCtrl', ['$scope', 'Post', 'Config', '$http',
 //== Post Detail Controller - Retrieve Data for a Single Post
 plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
   function($scope, $routeParams, Post) {
-    $scope.post = Post.get({title: $routeParams.title}, function(Post) {
-
-    });
+    $scope.post = Post.get({title: $routeParams.title});
 
     $scope.setImage = function(imageUrl) {
       $scope.mainImageUrl = imageUrl;
@@ -57,12 +60,13 @@ plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
   }]);
 
 //== New Post Controller - Attempts to Persist a New Post
-plogControllers.controller('NewPostCtrl', ['$scope', 'Post', 'Login', '$location',
+plogControllers.controller('NewEditPostCtrl', ['$scope', 'Post', 'Login', '$location',
   function($scope, Post, Login, $location) {
     $scope.error = '';
+    if ($routeParams.title) $scope.post = Post.get({title: $routeParams.title});
+    else $scope.post = new Post;
 
-    $scope.newPost = function() {
-      var post = new Post;
+    $scope.savePost = function() {
       post.apiKey = Login.apiKey;
       console.log('Login.apiKey = ' + Login.apiKey);
       post.title = $scope.title;
