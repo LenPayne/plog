@@ -60,8 +60,8 @@ plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
   }]);
 
 //== New Post Controller - Attempts to Persist a New Post
-plogControllers.controller('NewEditPostCtrl', ['$scope', 'Post', 'Login', '$location',
-  function($scope, Post, Login, $location) {
+plogControllers.controller('NewEditPostCtrl', ['$scope', 'Post', 'Login', '$location', '$routeParams',
+  function($scope, Post, Login, $location, $routeParams) {
     $scope.error = '';
     if ($routeParams.title) $scope.post = Post.get({title: $routeParams.title});
     else $scope.post = new Post;

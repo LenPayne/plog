@@ -118,7 +118,7 @@ app.post('/plog/:title', function(req, res) {
         }
         else if (doc && doc.expires > (new Date())) {
           db.collection(COLLECTION_POSTS, function(er, collection) {
-            collection.insert(obj, {'safe':true}, function(err, objects) {
+            collection.update({'title': obj.title}, obj, {'upsert':true}, function(err, objects) {
               if (err) {
                 console.warn(err.message);
                 res.status(500).send({ok: false});
