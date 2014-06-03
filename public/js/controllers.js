@@ -60,7 +60,7 @@ plogControllers.controller('PostDetailCtrl', ['$scope', '$routeParams', 'Post',
   }]);
 
 //== New Post Controller - Attempts to Persist a New Post
-plogControllers.controller('NewEditPostCtrl', ['$scope', 'Post', 'Login', '$location', '$routeParams',
+plogControllers.controller('ModifyPostCtrl', ['$scope', 'Post', 'Login', '$location', '$routeParams',
   function($scope, Post, Login, $location, $routeParams) {
     $scope.error = '';
     if ($routeParams.title) $scope.post = Post.get({title: $routeParams.title});
@@ -74,6 +74,17 @@ plogControllers.controller('NewEditPostCtrl', ['$scope', 'Post', 'Login', '$loca
       },
       function(httpResponse) {
         $scope.error = 'Error Saving Post: Status ' + httpResponse.status + ' - ' + httpResponse.statusText;
+      });
+    }
+
+    $scope.killPost = function() {
+      $scope.post.apiKey = Login.apiKey;
+      $scope.title = $scope.post.title;
+      $scope.post.$delete(function (val) {
+        $location.path('/posts');
+      },
+      function(httpResponse) {
+        $scope.error = 'Error Deleting Post: Status ' + httpResponse.status + ' - ' + httpResponse.statusText;
       });
     }
   }]);

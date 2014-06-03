@@ -98,7 +98,7 @@ app.get('/plog/:title', function(req, res) {
   });
 });
 
-//== Store a New Post by Title
+//== Add/Edit a Post by Title
 app.post('/plog/:title', function(req, res) {
   var apikey = req.query.apiKey;
   var title = req.params.title;
@@ -125,6 +125,38 @@ app.post('/plog/:title', function(req, res) {
               }
               if (err && err.message.indexOf('E11000 ') !== -1) {
                 console.warn('ID already present in DB');
+                res.status(500).send({ok: false});
+              }
+              db.close();
+              res.send({ok: true});
+            });
+          });
+        }
+        else {
+          console.warn('API Key Invalid or Expired: ' + apikey);
+          res.status(403).send({ok: false});
+        }
+      });
+    });
+  });
+});
+
+//== Delete a Post by Title
+app.del('/plog/:title', function(req, res) {
+  var apikey = req.query.apiKey;
+  var title = req.params.title;
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection(COLLECTION_SESSION, function(er, collection) {
+      collection.findOne({ 'apiKey': apikey}, function (e, doc) {
+        if (e) {
+          console.warn(e.message);
+          res.status(500).send({ok: false});
+        }
+        else if (doc && doc.expires > (new Date())) {
+          db.collection(COLLECTION_POSTS, function(er, collection) {
+            collection.findAndRemove({'title': title}, [['title', 1]], function(err, doc) {
+              if (err) {
+                console.warn(err.message);
                 res.status(500).send({ok: false});
               }
               db.close();

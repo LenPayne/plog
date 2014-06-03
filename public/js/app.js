@@ -39,12 +39,16 @@ plogApp.config(['$routeProvider',
         controller: 'PostDetailCtrl'
       }).
       when('/new', {
-        templateUrl: 'partials/new.html',
-        controller: 'NewEditPostCtrl'
+        templateUrl: 'partials/modify.html',
+        controller: 'ModifyPostCtrl'
       }).
       when('/edit/:title', {
-        templateUrl: 'partials/new.html',
-        controller: 'NewEditPostCtrl'
+        templateUrl: 'partials/modify.html',
+        controller: 'ModifyPostCtrl'
+      }).
+      when('/delete/:title', {
+        templateUrl: 'partials/modify.html',
+        controller: 'ModifyPostCtrl'
       }).
       otherwise({
         redirectTo: '/posts'
