@@ -19,7 +19,7 @@ TODO List
 
 The following major features are planned but not yet functional:
 
-* Editing Posts
+* ~~Editing Posts~~ (June 2, 2014)
 * "Sticky" Posts
 * Excerpts for Long Posts
 * Better Authoring Tools for Posts (WYSIWYG, MD)
