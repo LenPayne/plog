@@ -49,21 +49,9 @@ scrypt.verify.config.hashEncoding = "hex";
 //== Begin Section / => Static File Server ==
 //===========================================
 
-//== Default Route => Load the Homepage
-app.get('/', function(req, res) {
-  res.sendfile(path.join('public', 'index.html'));
-});
-
-//== "Web Server" Route => Translate Any File Request to Public Folder
-app.get(/^\/([\w\-\.\/]*\.(?:html|css|js|gif|png|jpeg|jpg|ico|pdf))$/, function(req, res) {
-  var filename = path.join('public', req.params[0]);
-  fs.exists(filename, function(exists) {
-    if (exists)
-      res.sendfile(filename);
-    else
-      res.status(404).sendfile(path.join('public', '404.html'));
-  })
-});
+var oneDay = 86400000;
+app.use(express.compress());
+app.use(express.static(__dirname + '/public', { maxAge : oneDay }));
 
 //== Begin Section /plog => Store/Retrieve Posts ==
 //=================================================

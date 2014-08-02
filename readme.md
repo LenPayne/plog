@@ -23,3 +23,11 @@ The following major features are planned but not yet functional:
 * "Sticky" Posts
 * Excerpts for Long Posts
 * Better Authoring Tools for Posts (WYSIWYG, MD)
+
+The following minor features are planned but not yet functional:
+
+* Session Keep-Alive (My session timed out while I was writing a post)
+* Post Titles as Title-Tags in Post-View Mode
+* Re-Structuring of the Security System (relying too much on the HTTPS I haven't implemented yet)
+* Switch to HTTP Basic Auth to retrieve login instead of GET tokens
+* Add feedback for failed login attempts
