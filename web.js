@@ -18,6 +18,8 @@
 
 //== Imports of External Libraries
 var express = require('express');
+var compression = require('compression');
+var serveStatic = require('serve-static');
 var path = require('path');
 var fs = require('fs');
 var mongo = require('mongodb');
@@ -50,8 +52,8 @@ scrypt.verify.config.hashEncoding = "hex";
 //===========================================
 
 var oneDay = 86400000;
-app.use(express.compress());
-app.use(express.static(__dirname + '/public', { maxAge : oneDay }));
+app.use(compression());
+app.use(serveStatic(__dirname + '/public', { maxAge : oneDay }));
 
 //== Begin Section /plog => Store/Retrieve Posts ==
 //=================================================
