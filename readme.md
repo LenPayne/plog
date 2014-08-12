@@ -23,6 +23,7 @@ The following major features are planned but not yet functional:
 * "Sticky" Posts
 * Excerpts for Long Posts
 * Better Authoring Tools for Posts (WYSIWYG, MD)
+* Design Improvements (eg- Lighter Blue on Content Bar)
 
 The following minor features are planned but not yet functional:
 
