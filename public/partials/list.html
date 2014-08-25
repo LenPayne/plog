@@ -9,11 +9,11 @@
 		</span>
 	</h5>
 </article>
-<div>
-	<div class="col-xs-2 text-left">
+<div class="row">
+	<div class="col-md-2 text-left">
 		<button class="btn btn-primary btn-sm" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1"><span class="glyphicon glyphicon-arrow-left"></span> Prev</button>
 	</div>
-	<div class="col-xs-5 text-center">
+	<div class="col-md-5 text-center">
 		<label>Sort By: </label>
 		<div class="btn-group">
 			<button ng-click="orderProp='time'" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-calendar"></span><span class="glyphicon glyphicon-arrow-down"></span></button>
@@ -22,10 +22,10 @@
 			<button ng-click="orderProp='-title'" class="btn btn-default btn-sm">A</span><span class="glyphicon glyphicon-arrow-up"></span></button>
 		</div>
 	</div>
-	<div class="col-xs-3 text-center">
+	<div class="col-md-3 text-center">
 		<input class="form-control input-sm" ng-model="searchText" placeholder="Search"/>
 	</div>
-	<div class="col-xs-2 text-right">
+	<div class="col-md-2 text-right">
 		<button class="btn btn-primary btn-sm" ng-disabled="currentPage >= posts.length/pageSize - 1" ng-click="currentPage=currentPage+1">Next <span class="glyphicon glyphicon-arrow-right"></span></button>
 	</div>
 </div>
