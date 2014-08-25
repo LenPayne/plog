@@ -89,17 +89,13 @@ h3 {
 }
 
 aside {
-	border-radius: 10px;
+	border-left: 1px #048 double;
+}
+
+aside .socialicons {
 	background-color: #036;
-	color: #FFF;
-}
-
-aside a {
-	color: #00A76C;
-}
-
-aside a:hover {
-	color: #0B01AD;
+	border-radius: 10px;
+	margin: 5px 0;
 }
 
 article {
