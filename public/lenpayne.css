@@ -89,7 +89,7 @@ h3 {
 }
 
 aside {
-	border-left: 1px #048 double;
+	border-left: 1px #ddd double;
 }
 
 aside .socialicons {
@@ -100,7 +100,7 @@ aside .socialicons {
 
 article {
 	margin-bottom: 1em;
-	border-bottom: 1px #048 double;
+	border-bottom: 1px #ddd double;
 }
 article h1 {
 	font-size: 1.6em;
