@@ -96,6 +96,10 @@ aside .socialicons {
 	margin: 5px 0;
 }
 
+header h1 {
+	font-size: 54px;
+}
+
 article {
 	margin-bottom: 1em;
 	border-bottom: 1px #ddd double;
